@@ -48,10 +48,6 @@ kafka::Properties loadConfigFromFile() {
 int main() {
     log("Executing program.");
 
-    string brokers = "";
-    string topic = "";
-    string message = "";
-
     try {
         // create config object
         kafka::Properties properties = loadConfigFromFile();
@@ -60,6 +56,9 @@ int main() {
         KafkaProducer producers(properties):
 
         // prepare record
+        log("Preparing record.");
+        string topic = getEnvironmentVariable("TOPIC");
+        string message = getEnvironmentVariable("MESSAGE");
         auto record = producer::ProducerRecord(topic, kafka::NullKey, Kafka::Value(message.c_str(), message.size());
 
         // send message
