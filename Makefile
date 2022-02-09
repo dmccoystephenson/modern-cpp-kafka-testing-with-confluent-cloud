@@ -1,9 +1,9 @@
-all: testing
+all: test
 
-testing: src/testing.cpp
+test: src/test.cpp
 	@echo "---"
-	@echo "Compiling testing.cpp"
+	@echo "Compiling test.cpp"
 
 	g++ src/test.cpp -o test
 
-	@echo "Finished compiling testing.cpp"
+	@echo "Finished compiling test.cpp"
