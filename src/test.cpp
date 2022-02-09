@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include "kafka/KafkaProducer.h"
 
 using namespace std;
 
