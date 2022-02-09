@@ -2,6 +2,7 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
 #include "kafka/KafkaProducer.h"
 
 using namespace std;
@@ -18,6 +19,32 @@ const char* getEnvironmentVariable(const char* variableName) {
     return toReturn;
 }
 
+kafka::Properties loadConfigFromFile() {
+    log("Loading configuration in from file.");
+
+    kafka::Properties properties;
+    properties.put()
+    
+    ifstream configFile ("cc.config");
+    
+    if (!configFile.is_open()) {
+        cout << "[ERROR] Couldn't open config file." << endl;
+    }
+
+    string line;
+    while (getline(configFile, line)) {
+        if (line[0] == '#') {
+            continue;
+        }
+
+        auto indexOfEqualsSign = line.find("=");
+        auto key = line.substr(0, indexOfEqualsSign);
+        auto value = line.substr(indexOfEqualsSign + 1);
+
+        properties.put(key, value);
+    }
+}
+
 int main() {
     log("Executing program.");
 
@@ -27,10 +54,7 @@ int main() {
 
     try {
         // create config object
-        kafka::Properties properties({
-            {"bootstrap.servers", brokers}
-            {"enable.idempotence", "true"}
-        })
+        kafka::Properties properties = loadConfigFromFile();
 
         // create producer
         KafkaProducer producers(properties):
